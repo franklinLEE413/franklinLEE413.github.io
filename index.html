@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>周末餐食决策终端</title>
+  <style>
+    :root{
+      --bg:#0a0d12;
+      --bg2:#0f141c;
+      --panel:#121922cc;
+      --panel-strong:#0f151dcc;
+      --line:#263241;
+      --line2:#3a4a60;
+      --text:#e6edf7;
+      --sub:#92a1b5;
+      --accent:#ff7a2f;
+      --accent2:#ffd37a;
+      --cyan:#69c7ff;
+      --danger:#ff5f72;
+      --ok:#85ffd2;
+      --shadow:0 20px 50px rgba(0,0,0,.35);
+      --radius:20px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{
+      margin:0;
+      min-height:100%;
+      background:
+        radial-gradient(circle at 18% 12%, rgba(255,122,47,.08), transparent 28%),
+        radial-gradient(circle at 82% 8%, rgba(105,199,255,.08), transparent 24%),
+        linear-gradient(180deg, #091019 0%, #0a0d12 38%, #0d1218 100%);
+      color:var(--text);
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+      background-size:28px 28px;
+      mask-image:linear-gradient(180deg, rgba(0,0,0,.3), rgba(0,0,0,.85));
+      opacity:.22;
+      z-index:0;
+    }
+
+    body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.03), transparent 30%, transparent 70%, rgba(255,255,255,.02));
+      mix-blend-mode:screen;
+      opacity:.18;
+      z-index:0;
+    }
+
+    .hud-line{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:0;
+      overflow:hidden;
+    }
+
+    .hud-line span{
+      position:absolute;
+      display:block;
+      height:1px;
+      width:30vw;
+      background:linear-gradient(90deg, transparent, rgba(255,122,47,.4), transparent);
+      animation:driftX linear infinite;
+      opacity:.45;
+    }
+
+    .hud-line span:nth-child(1){top:14%; left:-20vw; animation-duration:13s;}
+    .hud-line span:nth-child(2){top:29%; right:-25vw; animation-duration:16s; animation-direction:reverse;}
+    .hud-line span:nth-child(3){top:71%; left:-10vw; animation-duration:11s;}
+    .hud-line span:nth-child(4){top:84%; right:-20vw; animation-duration:18s; animation-direction:reverse;}
+
+    @keyframes driftX{
+      from{transform:translateX(-10vw)}
+      to{transform:translateX(140vw)}
+    }
+
+    .wrap{
+      position:relative;
+      z-index:1;
+      max-width:1240px;
+      margin:0 auto;
+      padding:calc(18px + env(safe-area-inset-top)) 16px calc(24px + env(safe-area-inset-bottom));
+    }
+
+    .hero{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:20px;
+      padding:14px 2px 18px;
+      flex-wrap:wrap;
+    }
+
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      font-size:12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:#ffd9b3;
+      border:1px solid rgba(255,122,47,.35);
+      background:rgba(255,122,47,.08);
+      clip-path:polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%, 8px 50%);
+    }
+
+    h1{
+      margin:14px 0 8px;
+      font-size:clamp(30px, 5vw, 48px);
+      line-height:1.05;
+      letter-spacing:.03em;
+      font-weight:900;
+    }
+
+    .sub{
+      max-width:760px;
+      color:var(--sub);
+      line-height:1.75;
+      font-size:14px;
+    }
+
+    .hero-stats{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .stat{
+      min-width:140px;
+      padding:12px 14px;
+      background:rgba(15,21,29,.7);
+      border:1px solid rgba(255,255,255,.06);
+      box-shadow:var(--shadow);
+      clip-path:polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+    }
+
+    .stat .k{
+      font-size:11px;
+      letter-spacing:.14em;
+      color:#8ea0b8;
+      text-transform:uppercase;
+      margin-bottom:8px;
+    }
+
+    .stat .v{
+      font-size:22px;
+      font-weight:800;
+      color:#fff;
+    }
+
+    .layout{
+      display:grid;
+      grid-template-columns:1.08fr .92fr;
+      gap:16px;
+    }
+
+    .panel{
+      position:relative;
+      background:
+        linear-gradient(180deg, rgba(18,25,34,.92), rgba(12,17,24,.9));
+      border:1px solid rgba(255,255,255,.06);
+      box-shadow:var(--shadow);
+      clip-path:polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+      overflow:hidden;
+    }
+
+    .panel::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        linear-gradient(90deg, rgba(255,122,47,.18), transparent 18%),
+        linear-gradient(180deg, rgba(255,255,255,.03), transparent 16%);
+      opacity:.8;
+    }
+
+    .panel-inner{
+      position:relative;
+      z-index:1;
+      padding:18px;
+    }
+
+    .panel-head{
+      display:flex;
+      justify-content:space-between;
+      gap:14px;
+      align-items:flex-start;
+      margin-bottom:12px;
+      flex-wrap:wrap;
+    }
+
+    .panel-head h2{
+      margin:0;
+      font-size:18px;
+      letter-spacing:.04em;
+    }
+
+    .panel-head p{
+      margin:6px 0 0;
+      color:var(--sub);
+      font-size:13px;
+      line-height:1.65;
+    }
+
+    .wheel-box{
+      position:relative;
+      display:grid;
+      place-items:center;
+      padding:12px 0 8px;
+    }
+
+    .pointer{
+      position:absolute;
+      top:2px;
+      left:50%;
+      transform:translateX(-50%);
+      width:0;height:0;
+      border-left:17px solid transparent;
+      border-right:17px solid transparent;
+      border-bottom:30px solid var(--accent);
+      z-index:3;
+      filter:drop-shadow(0 10px 20px rgba(255,122,47,.26));
+    }
+
+    .pointer::after{
+      content:"";
+      position:absolute;
+      left:50%;
+      top:31px;
+      transform:translateX(-50%);
+      width:13px;
+      height:13px;
+      border-radius:2px;
+      background:#fff;
+      box-shadow:0 0 0 5px rgba(255,122,47,.18);
+    }
+
+    canvas{
+      width:min(100%, 540px);
+      max-width:540px;
+      aspect-ratio:1/1;
+      border-radius:50%;
+      filter:drop-shadow(0 22px 48px rgba(0,0,0,.35));
+      user-select:none;
+      -webkit-user-select:none;
+    }
+
+    .result{
+      margin-top:12px;
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:12px;
+      align-items:center;
+      padding:16px;
+      background:rgba(8,12,18,.5);
+      border:1px solid rgba(255,255,255,.06);
+      clip-path:polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+    }
+
+    .result .label{
+      color:#8fa0b3;
+      font-size:12px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      margin-bottom:8px;
+    }
+
+    .result .value{
+      font-size:clamp(22px, 4vw, 34px);
+      font-weight:900;
+      color:#fff;
+      text-shadow:0 0 16px rgba(255,122,47,.18);
+      word-break:break-all;
+    }
+
+    .result .hint{
+      color:#ffcf9e;
+      font-size:13px;
+      text-align:right;
+      white-space:nowrap;
+    }
+
+    .buttons{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:14px;
+    }
+
+    button{
+      border:none;
+      cursor:pointer;
+      transition:transform .15s ease, opacity .15s ease, box-shadow .15s ease, background .15s ease;
+      -webkit-tap-highlight-color:transparent;
+    }
+
+    button:active{
+      transform:translateY(1px) scale(.99);
+    }
+
+    .btn-main{
+      padding:14px 18px;
+      min-height:48px;
+      color:#0b0e13;
+      background:linear-gradient(180deg, #ffd48a, #ff8f47 70%, #e36d2d);
+      font-weight:900;
+      letter-spacing:.04em;
+      clip-path:polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+      box-shadow:0 10px 24px rgba(255,122,47,.22);
+    }
+
+    .btn-sub{
+      padding:13px 16px;
+      min-height:48px;
+      color:#dfe7f2;
+      background:linear-gradient(180deg, #1a2330, #111821);
+      border:1px solid rgba(255,255,255,.08);
+      font-weight:800;
+      clip-path:polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+    }
+
+    .btn-danger{
+      color:#ffd8dc;
+      border-color:rgba(255,95,114,.2);
+    }
+
+    .editor-top{
+      display:flex;
+      gap:10px;
+      margin-bottom:14px;
+      flex-wrap:wrap;
+    }
+
+    .input{
+      flex:1 1 220px;
+      min-width:0;
+      height:48px;
+      padding:0 14px;
+      background:rgba(10,15,22,.8);
+      color:#f0f4fb;
+      border:1px solid rgba(255,255,255,.08);
+      outline:none;
+      clip-path:polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+      font-size:15px;
+    }
+
+    .input::placeholder{color:#65768d}
+
+    .list{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      max-height:540px;
+      overflow:auto;
+      padding-right:4px;
+    }
+
+    .row{
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:10px;
+      align-items:center;
+      padding:10px;
+      background:rgba(9,13,18,.62);
+      border:1px solid rgba(255,255,255,.06);
+      clip-path:polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+    }
+
+    .row input{
+      width:100%;
+      min-width:0;
+      border:none;
+      outline:none;
+      padding:8px 10px;
+      background:rgba(255,255,255,.02);
+      color:#eef2f8;
+      font-size:15px;
+    }
+
+    .row-actions{
+      display:flex;
+      gap:8px;
+      flex-wrap:nowrap;
+    }
+
+    .icon{
+      width:40px;height:40px;
+      display:grid;place-items:center;
+      background:linear-gradient(180deg, #18202c, #0f141b);
+      color:#d8e1ee;
+      border:1px solid rgba(255,255,255,.08);
+      font-size:16px;
+      font-weight:900;
+      clip-path:polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+    }
+
+    .tipbox{
+      margin-top:14px;
+      padding:14px;
+      border:1px solid rgba(255,255,255,.06);
+      background:rgba(10,15,22,.55);
+      color:#98a7ba;
+      line-height:1.75;
+      font-size:13px;
+      clip-path:polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+    }
+
+    .statusline{
+      margin-top:12px;
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      color:#8999ae;
+      font-size:12px;
+    }
+
+    .statusline .orange{color:#ffc07d}
+    .statusline .cyan{color:#8ad9ff}
+
+    .burst{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      overflow:hidden;
+      z-index:4;
+    }
+
+    .chip{
+      position:absolute;
+      width:10px;
+      height:18px;
+      opacity:.95;
+      animation:explode 1.5s ease forwards;
+      clip-path:polygon(25% 0, 100% 0, 75% 100%, 0 100%);
+    }
+
+    @keyframes explode{
+      from{transform:translate3d(0,0,0) rotate(0deg) scale(1); opacity:1}
+      to{transform:translate3d(var(--x), var(--y), 0) rotate(var(--r)) scale(.75); opacity:0}
+    }
+
+    @media (max-width: 940px){
+      .layout{grid-template-columns:1fr}
+      .list{max-height:none}
+      .hero{padding-top:8px}
+    }
+
+    @media (max-width: 560px){
+      .wrap{padding-left:12px; padding-right:12px}
+      .panel-inner{padding:14px}
+      .result{grid-template-columns:1fr}
+      .result .hint{text-align:left; white-space:normal}
+      .buttons > button{flex:1 1 calc(50% - 8px)}
+      .editor-top{flex-direction:column}
+      .hero-stats{width:100%}
+      .stat{flex:1 1 140px}
+    }
+  </style>
+</head>
+<body>
+  <div class="hud-line">
+    <span></span><span></span><span></span><span></span>
+  </div>
+
+  <div class="wrap">
+    <div class="hero">
+      <div>
+        <div class="tag">weekend meal decision terminal</div>
+        <h1>周末吃什么<br>战术决策终端</h1>
+        <div class="sub">
+          近未来风格的本地转盘页面。支持在页面内实时编辑候选菜单、自动本地保存、主屏快捷启动，以及“不满意重选”。
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="k">模式</div>
+          <div class="v">Meal Roulette</div>
+        </div>
+        <div class="stat">
+          <div class="k">保存</div>
+          <div class="v">Local Auto Save</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="layout">
+      <section class="panel">
+        <div class="panel-inner">
+          <div class="panel-head">
+            <div>
+              <h2>决策核心 / Wheel Core</h2>
+              <p>点击开始后转盘会自动旋转。若对结果不满意，可直接点“重选”再次抽取。</p>
+            </div>
+          </div>
+
+          <div class="wheel-box" id="wheelBox">
+            <div class="pointer"></div>
+            <canvas id="wheelCanvas" width="900" height="900"></canvas>
+            <div class="burst" id="burst"></div>
+          </div>
+
+          <div class="result">
+            <div>
+              <div class="label">current selection</div>
+              <div class="value" id="resultValue">待命中</div>
+            </div>
+            <div class="hint" id="hintText">系统待机中 / READY</div>
+          </div>
+
+          <div class="buttons">
+            <button class="btn-main" id="spinBtn">开始决策</button>
+            <button class="btn-sub" id="respinBtn">重选</button>
+            <button class="btn-sub" id="shuffleBtn">打乱顺序</button>
+          </div>
+
+          <div class="tipbox">
+            iPhone 使用建议：用 Safari 打开本页面后，点分享按钮 → 添加到主屏幕。这样从桌面打开时，会更像一个独立小组件页面。
+          </div>
+
+          <div class="statusline">
+            <div>候选项数量：<span class="orange" id="countValue">0</span></div>
+            <div>本地状态：<span class="cyan">已自动保存</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-inner">
+          <div class="panel-head">
+            <div>
+              <h2>候选菜单编辑 / Config</h2>
+              <p>你可以直接新增、修改、上移、删除。所有改动都会立即写入本地缓存。</p>
+            </div>
+          </div>
+
+          <div class="editor-top">
+            <input class="input" id="newItemInput" maxlength="18" placeholder="输入新的食物，例如：寿司 / 烤鱼 / 米线" />
+            <button class="btn-main" id="addBtn">添加选项</button>
+          </div>
+
+          <div class="buttons" style="margin-top:0; margin-bottom:12px;">
+            <button class="btn-sub" id="resetBtn">恢复默认</button>
+            <button class="btn-sub btn-danger" id="clearBtn">清空列表</button>
+          </div>
+
+          <div class="list" id="list"></div>
+
+          <div class="tipbox">
+            默认候选内容只是示例。你也可以把它改成“中餐 / 日料 / 快餐 / 外卖 / 夜宵”这种更泛化的分类玩法。
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = 'weekend_food_terminal_v2';
+    const DEFAULT_ITEMS = ['火锅','烤肉','寿司','拉面','炸鸡','麻辣烫','汉堡','湘菜'];
+    const HINTS = [
+      '系统判定完成 / LOCKED',
+      '已生成本次餐食建议',
+      '重选可覆盖当前结果',
+      '目标已锁定，准备出发',
+      '本轮决策已结束'
+    ];
+    const COLOR_SET = [
+      '#ff8a3d','#ffb25c','#ff6f56','#ffc874',
+      '#59b7ff','#78d6ff','#64ffc6','#9ab2ff',
+      '#f28cff','#7b8aff','#ff9f7a','#ffd36d'
+    ];
+
+    let items = loadItems();
+    let currentRotation = 0;
+    let spinning = false;
+
+    const canvas = document.getElementById('wheelCanvas');
+    const ctx = canvas.getContext('2d');
+    const resultValue = document.getElementById('resultValue');
+    const hintText = document.getElementById('hintText');
+    const countValue = document.getElementById('countValue');
+    const list = document.getElementById('list');
+    const burst = document.getElementById('burst');
+    const newItemInput = document.getElementById('newItemInput');
+
+    function loadItems(){
+      try{
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        if(Array.isArray(saved) && saved.length){
+          return saved
+            .filter(v => typeof v === 'string' && v.trim())
+            .map(v => v.trim())
+            .slice(0, 28);
+        }
+      }catch(e){}
+      return [...DEFAULT_ITEMS];
+    }
+
+    function saveItems(){
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+      countValue.textContent = String(items.length);
+    }
+
+    function escapeHtml(str){
+      return str.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'","&#39;");
+    }
+
+    function renderList(){
+      list.innerHTML = '';
+      saveItems();
+
+      if(items.length === 0){
+        const empty = document.createElement('div');
+        empty.className = 'row';
+        empty.innerHTML = '<div style="padding:8px 10px;color:#7e8ea3;">暂无候选项，请先添加。</div>';
+        list.appendChild(empty);
+        drawWheel();
+        return;
+      }
+
+      items.forEach((item, i) => {
+        const row = document.createElement('div');
+        row.className = 'row';
+        row.innerHTML = `
+          <input value="${escapeHtml(item)}" maxlength="18" aria-label="第${i+1}项" />
+          <div class="row-actions">
+            <button class="icon" title="上移">↑</button>
+            <button class="icon" title="删除">✕</button>
+          </div>
+        `;
+        const input = row.querySelector('input');
+        const up = row.querySelectorAll('.icon')[0];
+        const del = row.querySelectorAll('.icon')[1];
+
+        input.addEventListener('input', e => {
+          items[i] = e.target.value.trimStart().slice(0,18);
+          saveItems();
+          drawWheel();
+        });
+
+        input.addEventListener('blur', () => {
+          items[i] = (items[i] || '').trim();
+          if(!items[i]) items.splice(i,1);
+          renderList();
+        });
+
+        up.addEventListener('click', () => {
+          if(i === 0) return;
+          [items[i-1], items[i]] = [items[i], items[i-1]];
+          renderList();
+        });
+
+        del.addEventListener('click', () => {
+          items.splice(i,1);
+          renderList();
+        });
+
+        list.appendChild(row);
+      });
+
+      drawWheel();
+    }
+
+    function addItem(){
+      const val = newItemInput.value.trim().slice(0,18);
+      if(!val) return;
+      items.push(val);
+      if(items.length > 28) items = items.slice(-28);
+      newItemInput.value = '';
+      renderList();
+    }
+
+    function normalizeDeg(d){
+      return ((d % 360) + 360) % 360;
+    }
+
+    function getWinnerIndex(rotationDeg){
+      if(!items.length) return -1;
+      const pointerDeg = 270;
+      const sliceDeg = 360 / items.length;
+      const corrected = normalizeDeg(pointerDeg - normalizeDeg(rotationDeg));
+      return Math.floor(corrected / sliceDeg) % items.length;
+    }
+
+    function drawWheel(rotationDeg = currentRotation){
+      const w = canvas.width;
+      const h = canvas.height;
+      const cx = w / 2;
+      const cy = h / 2;
+      const r = Math.min(w, h) / 2 - 44;
+
+      ctx.clearRect(0,0,w,h);
+
+      const glow = ctx.createRadialGradient(cx,cy,r*.15,cx,cy,r*1.12);
+      glow.addColorStop(0,'rgba(255,255,255,0)');
+      glow.addColorStop(1,'rgba(255,122,47,.12)');
+      ctx.fillStyle = glow;
+      ctx.beginPath();
+      ctx.arc(cx,cy,r+30,0,Math.PI*2);
+      ctx.fill();
+
+      ctx.save();
+      ctx.translate(cx,cy);
+
+      if(items.length === 0){
+        ctx.beginPath();
+        ctx.arc(0,0,r,0,Math.PI*2);
+        ctx.fillStyle = '#111821';
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(255,255,255,.08)';
+        ctx.lineWidth = 6;
+        ctx.stroke();
+
+        ctx.fillStyle = '#9aabbd';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.font = '800 40px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif';
+        ctx.fillText('等待配置',0,0);
+        ctx.restore();
+        return;
+      }
+
+      ctx.rotate(rotationDeg * Math.PI / 180);
+
+      const slice = Math.PI * 2 / items.length;
+
+      for(let i=0;i<items.length;i++){
+        const start = -Math.PI / 2 + i * slice;
+        const end = start + slice;
+
+        const grad = ctx.createLinearGradient(
+          Math.cos(start) * r, Math.sin(start) * r,
+          Math.cos(end) * r, Math.sin(end) * r
+        );
+        const c1 = COLOR_SET[i % COLOR_SET.length];
+        const c2 = COLOR_SET[(i + 3) % COLOR_SET.length];
+        grad.addColorStop(0,c1);
+        grad.addColorStop(1,c2);
+
+        ctx.beginPath();
+        ctx.moveTo(0,0);
+        ctx.arc(0,0,r,start,end);
+        ctx.closePath();
+        ctx.fillStyle = grad;
+        ctx.fill();
+
+        ctx.strokeStyle = 'rgba(255,255,255,.2)';
+        ctx.lineWidth = 4;
+        ctx.stroke();
+
+        const mid = (start + end) / 2;
+        const innerR = r * .18;
+
+        ctx.beginPath();
+        ctx.moveTo(Math.cos(start) * innerR, Math.sin(start) * innerR);
+        ctx.lineTo(Math.cos(start) * r * .95, Math.sin(start) * r * .95);
+        ctx.strokeStyle = 'rgba(255,255,255,.16)';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        ctx.save();
+        ctx.rotate(mid);
+        ctx.translate(r * .62, 0);
+        ctx.rotate(Math.PI / 2);
+
+        const text = items[i];
+        let fontSize = 38;
+        if(text.length >= 5) fontSize = 32;
+        if(text.length >= 8) fontSize = 26;
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = `900 ${fontSize}px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.shadowColor = 'rgba(0,0,0,.22)';
+        ctx.shadowBlur = 12;
+        ctx.fillText(text, 0, 0);
+        ctx.restore();
+
+        ctx.beginPath();
+        ctx.arc(Math.cos(mid)*r*.84, Math.sin(mid)*r*.84, 4.5, 0, Math.PI*2);
+        ctx.fillStyle = 'rgba(255,255,255,.85)';
+        ctx.fill();
+      }
+
+      // ring
+      ctx.beginPath();
+      ctx.arc(0,0,r,0,Math.PI*2);
+      ctx.lineWidth = 10;
+      ctx.strokeStyle = 'rgba(255,255,255,.08)';
+      ctx.stroke();
+
+      // center
+      ctx.beginPath();
+      ctx.arc(0,0,r*.17,0,Math.PI*2);
+      ctx.fillStyle = '#0d141b';
+      ctx.fill();
+
+      const centerGrad = ctx.createLinearGradient(-r*.2,-r*.2,r*.2,r*.2);
+      centerGrad.addColorStop(0,'#ffd792');
+      centerGrad.addColorStop(1,'#ff7a2f');
+      ctx.beginPath();
+      ctx.arc(0,0,r*.12,0,Math.PI*2);
+      ctx.fillStyle = centerGrad;
+      ctx.fill();
+
+      ctx.fillStyle = '#0c0f14';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.font = '900 28px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif';
+      ctx.fillText('食',0,1);
+
+      ctx.restore();
+    }
+
+    function burstFx(){
+      burst.innerHTML = '';
+      const colors = ['#ff8a3d','#ffd36d','#59b7ff','#64ffc6','#ff6f56','#9ab2ff'];
+      for(let i=0;i<28;i++){
+        const el = document.createElement('span');
+        el.className = 'chip';
+        el.style.left = (48 + (Math.random()*8 - 4)) + '%';
+        el.style.top = (46 + (Math.random()*8 - 4)) + '%';
+        el.style.background = colors[i % colors.length];
+        el.style.setProperty('--x', (Math.random()*360 - 180) + 'px');
+        el.style.setProperty('--y', (Math.random()*260 - 30) + 'px');
+        el.style.setProperty('--r', (Math.random()*600 - 300) + 'deg');
+        burst.appendChild(el);
+      }
+      setTimeout(() => burst.innerHTML = '', 1600);
+    }
+
+    function finishSpin(){
+      const idx = getWinnerIndex(currentRotation);
+      const winner = idx >= 0 ? items[idx] : '待命中';
+      resultValue.textContent = winner;
+      hintText.textContent = HINTS[Math.floor(Math.random() * HINTS.length)];
+      burstFx();
+      spinning = false;
+      document.getElementById('spinBtn').style.opacity = '1';
+      document.getElementById('respinBtn').style.opacity = '1';
+    }
+
+    function spinWheel(forceRespin = false){
+      if(spinning) return;
+      if(items.length === 0){
+        resultValue.textContent = '无候选项';
+        hintText.textContent = '请先添加菜单项';
+        return;
+      }
+      if(items.length === 1){
+        resultValue.textContent = items[0];
+        hintText.textContent = '仅有一个候选项，自动锁定';
+        return;
+      }
+
+      spinning = true;
+      document.getElementById('spinBtn').style.opacity = '.7';
+      document.getElementById('respinBtn').style.opacity = '.7';
+
+      const extraSpins = forceRespin ? (5.6 + Math.random()*1.6) : (6.6 + Math.random()*1.8);
+      const randomOffset = Math.random() * 360;
+      const start = currentRotation;
+      const target = currentRotation + extraSpins * 360 + randomOffset;
+      const duration = forceRespin ? (3200 + Math.random()*700) : (4200 + Math.random()*900);
+      const t0 = performance.now();
+
+      function animate(t){
+        const p = Math.min(1, (t - t0) / duration);
+        const eased = 1 - Math.pow(1 - p, 4);
+        currentRotation = start + (target - start) * eased;
+        drawWheel(currentRotation);
+        if(p < 1){
+          requestAnimationFrame(animate);
+        }else{
+          currentRotation = normalizeDeg(target);
+          drawWheel(currentRotation);
+          finishSpin();
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+
+    function shuffleItems(){
+      if(spinning || items.length < 2) return;
+      for(let i = items.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        [items[i], items[j]] = [items[j], items[i]];
+      }
+      renderList();
+      hintText.textContent = '候选顺序已重排';
+    }
+
+    function resetItems(){
+      items = [...DEFAULT_ITEMS];
+      renderList();
+      resultValue.textContent = '待命中';
+      hintText.textContent = '默认菜单已恢复';
+    }
+
+    function clearItems(){
+      items = [];
+      renderList();
+      resultValue.textContent = '待命中';
+      hintText.textContent = '列表已清空';
+    }
+
+    document.getElementById('addBtn').addEventListener('click', addItem);
+    document.getElementById('spinBtn').addEventListener('click', () => spinWheel(false));
+    document.getElementById('respinBtn').addEventListener('click', () => spinWheel(true));
+    document.getElementById('shuffleBtn').addEventListener('click', shuffleItems);
+    document.getElementById('resetBtn').addEventListener('click', resetItems);
+    document.getElementById('clearBtn').addEventListener('click', clearItems);
+    newItemInput.addEventListener('keydown', e => { if(e.key === 'Enter') addItem(); });
+    window.addEventListener('resize', () => drawWheel(currentRotation));
+
+    renderList();
+    drawWheel();
+  </script>
+</body>
+</html>
