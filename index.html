@@ -5,36 +5,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <title>周末餐食决策终端</title>
+  <title>周末餐食决策终端 · Fangyi Style</title>
   <style>
     :root{
-      --bg:#0a0d12;
-      --bg2:#0f141c;
-      --panel:#121922cc;
-      --panel-strong:#0f151dcc;
-      --line:#263241;
-      --line2:#3a4a60;
-      --text:#e6edf7;
-      --sub:#92a1b5;
-      --accent:#ff7a2f;
-      --accent2:#ffd37a;
-      --cyan:#69c7ff;
-      --danger:#ff5f72;
-      --ok:#85ffd2;
-      --shadow:0 20px 50px rgba(0,0,0,.35);
-      --radius:20px;
+      --bg:#0b1414;
+      --bg2:#0f1d1b;
+      --bg3:#e8ece6;
+      --panel:#111a1bdb;
+      --panel2:#dfe6df14;
+      --line:#2d4543;
+      --line2:#5c7977;
+      --text:#eef4ef;
+      --sub:#a7b8b4;
+      --jade:#71d1c2;
+      --jade2:#9af0df;
+      --mist:#dfe8e0;
+      --crimson:#b44757;
+      --crimson2:#e06a79;
+      --gold:#d8c082;
+      --shadow:0 20px 46px rgba(0,0,0,.36);
     }
 
     *{box-sizing:border-box}
     html,body{
       margin:0;
       min-height:100%;
-      background:
-        radial-gradient(circle at 18% 12%, rgba(255,122,47,.08), transparent 28%),
-        radial-gradient(circle at 82% 8%, rgba(105,199,255,.08), transparent 24%),
-        linear-gradient(180deg, #091019 0%, #0a0d12 38%, #0d1218 100%);
       color:var(--text);
       font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+      background:
+        radial-gradient(circle at 12% 12%, rgba(113,209,194,.12), transparent 22%),
+        radial-gradient(circle at 88% 15%, rgba(180,71,87,.14), transparent 20%),
+        radial-gradient(circle at 78% 76%, rgba(154,240,223,.08), transparent 20%),
+        linear-gradient(180deg, #091212 0%, #0b1414 32%, #0f1a19 100%);
       overflow-x:hidden;
     }
 
@@ -43,12 +45,13 @@
       position:fixed;
       inset:0;
       pointer-events:none;
+      opacity:.20;
       background:
+        radial-gradient(circle at 15% 20%, rgba(255,255,255,.06) 0 1px, transparent 1px),
         linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
-      background-size:28px 28px;
-      mask-image:linear-gradient(180deg, rgba(0,0,0,.3), rgba(0,0,0,.85));
-      opacity:.22;
+      background-size:22px 22px, 32px 32px, 32px 32px;
+      mask-image:linear-gradient(180deg, rgba(0,0,0,.2), rgba(0,0,0,.85));
       z-index:0;
     }
 
@@ -57,39 +60,21 @@
       position:fixed;
       inset:0;
       pointer-events:none;
+      opacity:.12;
       background:
-        linear-gradient(180deg, rgba(255,255,255,.03), transparent 30%, transparent 70%, rgba(255,255,255,.02));
-      mix-blend-mode:screen;
-      opacity:.18;
+        radial-gradient(circle at 50% 50%, transparent 0 45%, rgba(255,255,255,.04) 46%, transparent 47%),
+        radial-gradient(circle at 50% 50%, transparent 0 58%, rgba(255,255,255,.03) 59%, transparent 60%);
       z-index:0;
     }
 
-    .hud-line{
+    .topo{
       position:fixed;
       inset:0;
-      pointer-events:none;
       z-index:0;
-      overflow:hidden;
-    }
-
-    .hud-line span{
-      position:absolute;
-      display:block;
-      height:1px;
-      width:30vw;
-      background:linear-gradient(90deg, transparent, rgba(255,122,47,.4), transparent);
-      animation:driftX linear infinite;
-      opacity:.45;
-    }
-
-    .hud-line span:nth-child(1){top:14%; left:-20vw; animation-duration:13s;}
-    .hud-line span:nth-child(2){top:29%; right:-25vw; animation-duration:16s; animation-direction:reverse;}
-    .hud-line span:nth-child(3){top:71%; left:-10vw; animation-duration:11s;}
-    .hud-line span:nth-child(4){top:84%; right:-20vw; animation-duration:18s; animation-direction:reverse;}
-
-    @keyframes driftX{
-      from{transform:translateX(-10vw)}
-      to{transform:translateX(140vw)}
+      pointer-events:none;
+      opacity:.12;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%3Cg fill='none' stroke='%23dce7e1' stroke-width='1'%3E%3Cpath d='M15 45c18-12 42-11 61 0 25 15 53 17 79 2 11-6 23-9 35-8'/%3E%3Cpath d='M9 72c16-10 38-10 58 0 28 14 57 16 86 1 14-7 28-9 43-7'/%3E%3Cpath d='M1 104c18-9 42-8 63 2 26 12 54 13 82-1 15-7 31-10 47-8'/%3E%3Cpath d='M18 138c18-9 37-8 57 2 27 13 55 14 84 0 16-8 33-10 50-8'/%3E%3Cpath d='M7 168c18-10 40-9 60 1 27 13 55 14 84 1 16-7 32-10 48-9'/%3E%3C/g%3E%3C/svg%3E");
+      background-size:220px 220px;
     }
 
     .wrap{
@@ -97,48 +82,48 @@
       z-index:1;
       max-width:1240px;
       margin:0 auto;
-      padding:calc(18px + env(safe-area-inset-top)) 16px calc(24px + env(safe-area-inset-bottom));
+      padding:calc(20px + env(safe-area-inset-top)) 16px calc(28px + env(safe-area-inset-bottom));
     }
 
     .hero{
       display:flex;
-      align-items:flex-end;
       justify-content:space-between;
-      gap:20px;
-      padding:14px 2px 18px;
+      align-items:flex-end;
+      gap:18px;
       flex-wrap:wrap;
+      padding:6px 2px 18px;
     }
 
-    .tag{
+    .badge{
       display:inline-flex;
       align-items:center;
       gap:8px;
       padding:8px 12px;
+      border:1px solid rgba(113,209,194,.32);
+      color:#c9f5ed;
+      background:rgba(113,209,194,.08);
       font-size:12px;
-      letter-spacing:.12em;
+      letter-spacing:.14em;
       text-transform:uppercase;
-      color:#ffd9b3;
-      border:1px solid rgba(255,122,47,.35);
-      background:rgba(255,122,47,.08);
-      clip-path:polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%, 8px 50%);
+      clip-path:polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
     }
 
     h1{
       margin:14px 0 8px;
       font-size:clamp(30px, 5vw, 48px);
       line-height:1.05;
-      letter-spacing:.03em;
+      letter-spacing:.02em;
       font-weight:900;
     }
 
     .sub{
-      max-width:760px;
-      color:var(--sub);
+      max-width:780px;
+      color:#b8c6c2;
       line-height:1.75;
       font-size:14px;
     }
 
-    .hero-stats{
+    .hero .mini{
       display:flex;
       gap:12px;
       flex-wrap:wrap;
@@ -147,23 +132,23 @@
     .stat{
       min-width:140px;
       padding:12px 14px;
-      background:rgba(15,21,29,.7);
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
       border:1px solid rgba(255,255,255,.06);
       box-shadow:var(--shadow);
-      clip-path:polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+      clip-path:polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
     }
 
     .stat .k{
       font-size:11px;
-      letter-spacing:.14em;
-      color:#8ea0b8;
+      color:#91a6a0;
       text-transform:uppercase;
+      letter-spacing:.14em;
       margin-bottom:8px;
     }
 
     .stat .v{
       font-size:22px;
-      font-weight:800;
+      font-weight:900;
       color:#fff;
     }
 
@@ -176,11 +161,11 @@
     .panel{
       position:relative;
       background:
-        linear-gradient(180deg, rgba(18,25,34,.92), rgba(12,17,24,.9));
+        linear-gradient(180deg, rgba(17,26,27,.94), rgba(10,18,18,.95));
       border:1px solid rgba(255,255,255,.06);
       box-shadow:var(--shadow);
-      clip-path:polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
       overflow:hidden;
+      clip-path:polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
     }
 
     .panel::before{
@@ -189,9 +174,9 @@
       inset:0;
       pointer-events:none;
       background:
-        linear-gradient(90deg, rgba(255,122,47,.18), transparent 18%),
+        linear-gradient(90deg, rgba(113,209,194,.13), transparent 18%),
         linear-gradient(180deg, rgba(255,255,255,.03), transparent 16%);
-      opacity:.8;
+      opacity:.9;
     }
 
     .panel-inner{
@@ -212,12 +197,12 @@
     .panel-head h2{
       margin:0;
       font-size:18px;
-      letter-spacing:.04em;
+      letter-spacing:.03em;
     }
 
     .panel-head p{
       margin:6px 0 0;
-      color:var(--sub);
+      color:#b8c6c2;
       font-size:13px;
       line-height:1.65;
     }
@@ -227,42 +212,64 @@
       display:grid;
       place-items:center;
       padding:12px 0 8px;
+      min-height:580px;
     }
 
     .pointer{
       position:absolute;
-      top:2px;
+      top:6px;
       left:50%;
       transform:translateX(-50%);
       width:0;height:0;
-      border-left:17px solid transparent;
-      border-right:17px solid transparent;
-      border-bottom:30px solid var(--accent);
-      z-index:3;
-      filter:drop-shadow(0 10px 20px rgba(255,122,47,.26));
+      border-left:18px solid transparent;
+      border-right:18px solid transparent;
+      border-bottom:34px solid var(--crimson2);
+      z-index:4;
+      filter:drop-shadow(0 10px 16px rgba(176,71,87,.26));
     }
 
     .pointer::after{
       content:"";
       position:absolute;
       left:50%;
-      top:31px;
+      top:34px;
       transform:translateX(-50%);
       width:13px;
       height:13px;
-      border-radius:2px;
-      background:#fff;
-      box-shadow:0 0 0 5px rgba(255,122,47,.18);
+      border-radius:3px;
+      background:#f3f6f2;
+      box-shadow:0 0 0 5px rgba(180,71,87,.15);
     }
 
     canvas{
-      width:min(100%, 540px);
-      max-width:540px;
+      width:min(100%, 560px);
+      max-width:560px;
       aspect-ratio:1/1;
-      border-radius:50%;
-      filter:drop-shadow(0 22px 48px rgba(0,0,0,.35));
       user-select:none;
       -webkit-user-select:none;
+      filter:drop-shadow(0 22px 48px rgba(0,0,0,.34));
+    }
+
+    .burst{
+      position:absolute;
+      inset:0;
+      z-index:5;
+      pointer-events:none;
+      overflow:hidden;
+    }
+
+    .chip{
+      position:absolute;
+      width:10px;
+      height:18px;
+      opacity:.95;
+      animation:explode 1.45s ease forwards;
+      clip-path:polygon(25% 0, 100% 0, 75% 100%, 0 100%);
+    }
+
+    @keyframes explode{
+      from{transform:translate3d(0,0,0) rotate(0deg) scale(1); opacity:1}
+      to{transform:translate3d(var(--x), var(--y), 0) rotate(var(--r)) scale(.72); opacity:0}
     }
 
     .result{
@@ -272,13 +279,14 @@
       gap:12px;
       align-items:center;
       padding:16px;
-      background:rgba(8,12,18,.5);
+      background:
+        linear-gradient(135deg, rgba(113,209,194,.06), rgba(255,255,255,.02));
       border:1px solid rgba(255,255,255,.06);
       clip-path:polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
     }
 
     .result .label{
-      color:#8fa0b3;
+      color:#b9c8c4;
       font-size:12px;
       letter-spacing:.14em;
       text-transform:uppercase;
@@ -286,17 +294,17 @@
     }
 
     .result .value{
-      font-size:clamp(22px, 4vw, 34px);
+      font-size:clamp(24px, 4vw, 36px);
       font-weight:900;
-      color:#fff;
-      text-shadow:0 0 16px rgba(255,122,47,.18);
+      color:#ffffff;
+      text-shadow:0 0 18px rgba(113,209,194,.12);
       word-break:break-all;
     }
 
     .result .hint{
-      color:#ffcf9e;
-      font-size:13px;
       text-align:right;
+      color:#d7e8e3;
+      font-size:13px;
       white-space:nowrap;
     }
 
@@ -310,7 +318,7 @@
     button{
       border:none;
       cursor:pointer;
-      transition:transform .15s ease, opacity .15s ease, box-shadow .15s ease, background .15s ease;
+      transition:transform .15s ease, opacity .15s ease, box-shadow .15s ease, filter .15s ease;
       -webkit-tap-highlight-color:transparent;
     }
 
@@ -319,29 +327,29 @@
     }
 
     .btn-main{
-      padding:14px 18px;
       min-height:48px;
-      color:#0b0e13;
-      background:linear-gradient(180deg, #ffd48a, #ff8f47 70%, #e36d2d);
+      padding:14px 18px;
+      color:#0b1212;
+      background:linear-gradient(180deg, #c7efe7, #80dccd 68%, #5fbfae);
+      box-shadow:0 10px 24px rgba(113,209,194,.18);
       font-weight:900;
       letter-spacing:.04em;
       clip-path:polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
-      box-shadow:0 10px 24px rgba(255,122,47,.22);
     }
 
     .btn-sub{
-      padding:13px 16px;
       min-height:48px;
-      color:#dfe7f2;
-      background:linear-gradient(180deg, #1a2330, #111821);
+      padding:13px 16px;
+      color:#ecf3ef;
+      background:linear-gradient(180deg, #182425, #101819);
       border:1px solid rgba(255,255,255,.08);
       font-weight:800;
       clip-path:polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
     }
 
     .btn-danger{
-      color:#ffd8dc;
-      border-color:rgba(255,95,114,.2);
+      color:#ffd8dd;
+      border-color:rgba(180,71,87,.24);
     }
 
     .editor-top{
@@ -356,15 +364,15 @@
       min-width:0;
       height:48px;
       padding:0 14px;
-      background:rgba(10,15,22,.8);
-      color:#f0f4fb;
+      color:#f0f6f2;
+      background:rgba(255,255,255,.03);
       border:1px solid rgba(255,255,255,.08);
       outline:none;
-      clip-path:polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
       font-size:15px;
+      clip-path:polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
     }
 
-    .input::placeholder{color:#65768d}
+    .input::placeholder{color:#6f8780}
 
     .list{
       display:flex;
@@ -381,7 +389,7 @@
       gap:10px;
       align-items:center;
       padding:10px;
-      background:rgba(9,13,18,.62);
+      background:rgba(255,255,255,.025);
       border:1px solid rgba(255,255,255,.06);
       clip-path:polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
     }
@@ -392,8 +400,8 @@
       border:none;
       outline:none;
       padding:8px 10px;
-      background:rgba(255,255,255,.02);
-      color:#eef2f8;
+      background:transparent;
+      color:#eef3f0;
       font-size:15px;
     }
 
@@ -404,23 +412,25 @@
     }
 
     .icon{
-      width:40px;height:40px;
-      display:grid;place-items:center;
-      background:linear-gradient(180deg, #18202c, #0f141b);
-      color:#d8e1ee;
-      border:1px solid rgba(255,255,255,.08);
+      width:40px;
+      height:40px;
+      display:grid;
+      place-items:center;
+      color:#e6eeeb;
       font-size:16px;
       font-weight:900;
+      background:linear-gradient(180deg, #172325, #101819);
+      border:1px solid rgba(255,255,255,.08);
       clip-path:polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
     }
 
     .tipbox{
       margin-top:14px;
       padding:14px;
+      background:rgba(255,255,255,.03);
       border:1px solid rgba(255,255,255,.06);
-      background:rgba(10,15,22,.55);
-      color:#98a7ba;
-      line-height:1.75;
+      color:#b7c4c0;
+      line-height:1.72;
       font-size:13px;
       clip-path:polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
     }
@@ -431,39 +441,22 @@
       justify-content:space-between;
       gap:12px;
       flex-wrap:wrap;
-      color:#8999ae;
+      color:#b1bfbb;
       font-size:12px;
     }
 
-    .statusline .orange{color:#ffc07d}
-    .statusline .cyan{color:#8ad9ff}
+    .statusline .a{color:#bfeee4}
+    .statusline .b{color:#f2c0c7}
 
-    .burst{
-      position:absolute;
-      inset:0;
-      pointer-events:none;
-      overflow:hidden;
-      z-index:4;
-    }
-
-    .chip{
-      position:absolute;
-      width:10px;
-      height:18px;
-      opacity:.95;
-      animation:explode 1.5s ease forwards;
-      clip-path:polygon(25% 0, 100% 0, 75% 100%, 0 100%);
-    }
-
-    @keyframes explode{
-      from{transform:translate3d(0,0,0) rotate(0deg) scale(1); opacity:1}
-      to{transform:translate3d(var(--x), var(--y), 0) rotate(var(--r)) scale(.75); opacity:0}
+    .note{
+      font-size:12px;
+      color:#8ea29d;
     }
 
     @media (max-width: 940px){
       .layout{grid-template-columns:1fr}
       .list{max-height:none}
-      .hero{padding-top:8px}
+      .wheel-box{min-height:520px}
     }
 
     @media (max-width: 560px){
@@ -473,32 +466,32 @@
       .result .hint{text-align:left; white-space:normal}
       .buttons > button{flex:1 1 calc(50% - 8px)}
       .editor-top{flex-direction:column}
-      .hero-stats{width:100%}
+      .hero .mini{width:100%}
       .stat{flex:1 1 140px}
+      .wheel-box{min-height:480px}
     }
   </style>
 </head>
 <body>
-  <div class="hud-line">
-    <span></span><span></span><span></span><span></span>
-  </div>
+  <div class="topo"></div>
 
   <div class="wrap">
     <div class="hero">
       <div>
-        <div class="tag">weekend meal decision terminal</div>
-        <h1>周末吃什么<br>战术决策终端</h1>
+        <div class="badge">fangyi-inspired tactical terminal</div>
+        <h1>周末吃什么<br>决策终端</h1>
         <div class="sub">
-          近未来风格的本地转盘页面。支持在页面内实时编辑候选菜单、自动本地保存、主屏快捷启动，以及“不满意重选”。
+          这版我按“可读性优先”改了：候选项少时自动用外圈标签环，候选项多时自动切到扇区竖排。整体配色改成偏庄方宜气质的深墨绿、青玉色、灰白和暗红点缀风格。
         </div>
       </div>
-      <div class="hero-stats">
+
+      <div class="mini">
         <div class="stat">
-          <div class="k">模式</div>
-          <div class="v">Meal Roulette</div>
+          <div class="k">label mode</div>
+          <div class="v" id="modeStat">Outer Ring</div>
         </div>
         <div class="stat">
-          <div class="k">保存</div>
+          <div class="k">save mode</div>
           <div class="v">Local Auto Save</div>
         </div>
       </div>
@@ -510,7 +503,7 @@
           <div class="panel-head">
             <div>
               <h2>决策核心 / Wheel Core</h2>
-              <p>点击开始后转盘会自动旋转。若对结果不满意，可直接点“重选”再次抽取。</p>
+              <p>箭头与中奖扇区中心严格对齐。重选会尽量避开上一次结果。选项较少时启用外圈标签环，可读性更强。</p>
             </div>
           </div>
 
@@ -535,12 +528,12 @@
           </div>
 
           <div class="tipbox">
-            iPhone 使用建议：用 Safari 打开本页面后，点分享按钮 → 添加到主屏幕。这样从桌面打开时，会更像一个独立小组件页面。
+            iPhone 使用时，把网页发布到 GitHub Pages 后，用 Safari 打开网址，再点“分享 → 添加到主屏幕”即可。这个版本更适合做成主屏网页捷径。
           </div>
 
           <div class="statusline">
-            <div>候选项数量：<span class="orange" id="countValue">0</span></div>
-            <div>本地状态：<span class="cyan">已自动保存</span></div>
+            <div>候选项数量：<span class="a" id="countValue">0</span></div>
+            <div>主题：<span class="b">Fangyi-Inspired</span></div>
           </div>
         </div>
       </section>
@@ -550,7 +543,7 @@
           <div class="panel-head">
             <div>
               <h2>候选菜单编辑 / Config</h2>
-              <p>你可以直接新增、修改、上移、删除。所有改动都会立即写入本地缓存。</p>
+              <p>新增、修改、上移、删除都支持。内容会自动保存在本地。推荐每个候选项尽量控制在 6 个字以内，视觉会更舒服。</p>
             </div>
           </div>
 
@@ -567,7 +560,11 @@
           <div class="list" id="list"></div>
 
           <div class="tipbox">
-            默认候选内容只是示例。你也可以把它改成“中餐 / 日料 / 快餐 / 外卖 / 夜宵”这种更泛化的分类玩法。
+            少于等于 12 个选项时，自动使用“外圈标签环”模式；超过 12 个时，自动切换为“扇区竖排”模式，防止标签互相遮挡。
+          </div>
+
+          <div class="note">
+            配色借鉴的是庄方宜相关宣传图里常见的深墨绿、青绿色高光、暗红细节和灰白技术底纹感，不直接使用原图。
           </div>
         </div>
       </section>
@@ -575,7 +572,7 @@
   </div>
 
   <script>
-    const STORAGE_KEY = 'weekend_food_terminal_v2';
+    const STORAGE_KEY = 'weekend_food_terminal_fangyi_v4';
     const DEFAULT_ITEMS = ['火锅','烤肉','寿司','拉面','炸鸡','麻辣烫','汉堡','湘菜'];
     const HINTS = [
       '系统判定完成 / LOCKED',
@@ -585,14 +582,20 @@
       '本轮决策已结束'
     ];
     const COLOR_SET = [
-      '#ff8a3d','#ffb25c','#ff6f56','#ffc874',
-      '#59b7ff','#78d6ff','#64ffc6','#9ab2ff',
-      '#f28cff','#7b8aff','#ff9f7a','#ffd36d'
+      ['#dfe6df','#a8d9d0'],
+      ['#d7ddd7','#7dc9bc'],
+      ['#e8ece6','#b84e5f'],
+      ['#c6dad8','#88d8c8'],
+      ['#d7e3db','#729891'],
+      ['#e7ebe5','#c76a76'],
+      ['#cedbd8','#90e2d0'],
+      ['#dde6df','#6eb7aa']
     ];
 
     let items = loadItems();
     let currentRotation = 0;
     let spinning = false;
+    let currentWinnerIndex = -1;
 
     const canvas = document.getElementById('wheelCanvas');
     const ctx = canvas.getContext('2d');
@@ -602,6 +605,7 @@
     const list = document.getElementById('list');
     const burst = document.getElementById('burst');
     const newItemInput = document.getElementById('newItemInput');
+    const modeStat = document.getElementById('modeStat');
 
     function loadItems(){
       try{
@@ -619,10 +623,11 @@
     function saveItems(){
       localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
       countValue.textContent = String(items.length);
+      modeStat.textContent = items.length <= 12 ? 'Outer Ring' : 'Radial Vertical';
     }
 
     function escapeHtml(str){
-      return str.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'","&#39;");
+      return str.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#39;');
     }
 
     function renderList(){
@@ -632,8 +637,9 @@
       if(items.length === 0){
         const empty = document.createElement('div');
         empty.className = 'row';
-        empty.innerHTML = '<div style="padding:8px 10px;color:#7e8ea3;">暂无候选项，请先添加。</div>';
+        empty.innerHTML = '<div style="padding:8px 10px;color:#7e928d;">暂无候选项，请先添加。</div>';
         list.appendChild(empty);
+        currentWinnerIndex = -1;
         drawWheel();
         return;
       }
@@ -655,23 +661,27 @@
         input.addEventListener('input', e => {
           items[i] = e.target.value.trimStart().slice(0,18);
           saveItems();
+          currentWinnerIndex = -1;
           drawWheel();
         });
 
         input.addEventListener('blur', () => {
           items[i] = (items[i] || '').trim();
           if(!items[i]) items.splice(i,1);
+          currentWinnerIndex = -1;
           renderList();
         });
 
         up.addEventListener('click', () => {
           if(i === 0) return;
           [items[i-1], items[i]] = [items[i], items[i-1]];
+          currentWinnerIndex = -1;
           renderList();
         });
 
         del.addEventListener('click', () => {
           items.splice(i,1);
+          currentWinnerIndex = -1;
           renderList();
         });
 
@@ -687,6 +697,7 @@
       items.push(val);
       if(items.length > 28) items = items.slice(-28);
       newItemInput.value = '';
+      currentWinnerIndex = -1;
       renderList();
     }
 
@@ -694,12 +705,150 @@
       return ((d % 360) + 360) % 360;
     }
 
+    function getSliceDeg(){
+      return items.length ? 360 / items.length : 0;
+    }
+
+    function getFinalRotationForIndex(index){
+      return normalizeDeg(-index * getSliceDeg());
+    }
+
     function getWinnerIndex(rotationDeg){
       if(!items.length) return -1;
-      const pointerDeg = 270;
-      const sliceDeg = 360 / items.length;
-      const corrected = normalizeDeg(pointerDeg - normalizeDeg(rotationDeg));
-      return Math.floor(corrected / sliceDeg) % items.length;
+      const sliceDeg = getSliceDeg();
+      return Math.round(normalizeDeg(-rotationDeg) / sliceDeg) % items.length;
+    }
+
+    function pickRandomIndex(excludeIndex = null){
+      if(!items.length) return -1;
+      if(items.length === 1) return 0;
+      let idx = Math.floor(Math.random() * items.length);
+      if(excludeIndex !== null){
+        while(idx === excludeIndex) idx = Math.floor(Math.random() * items.length);
+      }
+      return idx;
+    }
+
+    function splitTwoLines(text, maxPerLine){
+      const chars = Array.from((text || '').trim());
+      if(chars.length <= maxPerLine) return [chars.join('')];
+      const first = chars.slice(0, maxPerLine).join('');
+      let second = chars.slice(maxPerLine, maxPerLine * 2).join('');
+      if(chars.length > maxPerLine * 2){
+        second = second.slice(0, Math.max(1, maxPerLine - 1)) + '…';
+      }
+      return [first, second];
+    }
+
+    function roundedRect(x, y, w, h, r){
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.lineTo(x + w - r, y);
+      ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+      ctx.lineTo(x + w, y + h - r);
+      ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+      ctx.lineTo(x + r, y + h);
+      ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+      ctx.lineTo(x, y + r);
+      ctx.quadraticCurveTo(x, y, x + r, y);
+      ctx.closePath();
+    }
+
+    function drawOuterLabel(text, mid, r, isSelected){
+      const lines = splitTwoLines(text, 4);
+      const textRadius = r + 58;
+      const x = Math.cos(mid) * textRadius;
+      const y = Math.sin(mid) * textRadius;
+
+      let angle = mid + Math.PI / 2;
+      if(Math.cos(mid) < 0) angle += Math.PI;
+
+      const width = lines.length === 2 ? 88 : 80;
+      const height = lines.length === 2 ? 46 : 34;
+      const radius = 10;
+
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(angle);
+
+      ctx.save();
+      if(isSelected){
+        ctx.shadowColor = 'rgba(154,240,223,.30)';
+        ctx.shadowBlur = 18;
+      }
+      roundedRect(-width/2, -height/2, width, height, radius);
+      ctx.fillStyle = isSelected ? 'rgba(154,240,223,.20)' : 'rgba(6,12,12,.90)';
+      ctx.fill();
+      ctx.strokeStyle = isSelected ? 'rgba(235,252,248,.96)' : 'rgba(255,255,255,.16)';
+      ctx.lineWidth = isSelected ? 2.2 : 1.2;
+      ctx.stroke();
+      ctx.restore();
+
+      ctx.fillStyle = '#fcfffd';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      const fontSize = lines.length === 2 ? 15 : 16;
+      ctx.font = `800 ${fontSize}px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif`;
+      ctx.shadowColor = 'rgba(0,0,0,.34)';
+      ctx.shadowBlur = 8;
+
+      if(lines.length === 1){
+        ctx.fillText(lines[0], 0, 0);
+      }else{
+        ctx.fillText(lines[0], 0, -9);
+        ctx.fillText(lines[1], 0, 9);
+      }
+
+      ctx.restore();
+    }
+
+    function drawRadialVerticalLabel(text, mid, r){
+      const chars = Array.from((text || '').trim());
+      if(chars.length === 0) return;
+
+      let fontSize = 34;
+      const count = items.length;
+      if(count >= 16) fontSize = 16;
+      else if(count >= 14) fontSize = 18;
+      else if(count >= 12) fontSize = 20;
+      else if(count >= 10) fontSize = 23;
+      else if(count >= 8) fontSize = 27;
+
+      if(chars.length >= 8) fontSize -= 1;
+      if(chars.length >= 12) fontSize -= 2;
+      fontSize = Math.max(14, fontSize);
+
+      const charGap = fontSize * 1.00;
+      const outerRadius =
+        count >= 16 ? r * 0.81 :
+        count >= 13 ? r * 0.78 :
+        count >= 10 ? r * 0.75 : r * 0.72;
+
+      ctx.save();
+
+      // 让文字沿半径朝圆心排列：
+      // 例如“炸鸡” => 炸在外，鸡在内
+      ctx.rotate(mid + Math.PI / 2);
+      ctx.translate(0, -outerRadius);
+
+      ctx.font = `900 ${fontSize}px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.shadowColor = 'rgba(0,0,0,.30)';
+      ctx.shadowBlur = 10;
+
+      for(let i = 0; i < chars.length; i++){
+        const y = i * charGap;
+
+        ctx.lineWidth = Math.max(3, fontSize * 0.18);
+        ctx.strokeStyle = 'rgba(245,250,247,.88)';
+        ctx.strokeText(chars[i], 0, y);
+
+        ctx.fillStyle = '#0f1d1b';
+        ctx.fillText(chars[i], 0, y);
+      }
+
+      ctx.restore();
     }
 
     function drawWheel(rotationDeg = currentRotation){
@@ -707,55 +856,75 @@
       const h = canvas.height;
       const cx = w / 2;
       const cy = h / 2;
-      const r = Math.min(w, h) / 2 - 44;
+      const labelMode = items.length <= 12 ? 'outer' : 'radial';
+      const r = labelMode === 'outer' ? 280 : 320;
 
       ctx.clearRect(0,0,w,h);
 
-      const glow = ctx.createRadialGradient(cx,cy,r*.15,cx,cy,r*1.12);
-      glow.addColorStop(0,'rgba(255,255,255,0)');
-      glow.addColorStop(1,'rgba(255,122,47,.12)');
+      const glow = ctx.createRadialGradient(cx, cy, r*.18, cx, cy, r*1.30);
+      glow.addColorStop(0, 'rgba(255,255,255,0)');
+      glow.addColorStop(1, 'rgba(113,209,194,.12)');
       ctx.fillStyle = glow;
       ctx.beginPath();
-      ctx.arc(cx,cy,r+30,0,Math.PI*2);
+      ctx.arc(cx, cy, r + 80, 0, Math.PI * 2);
       ctx.fill();
 
       ctx.save();
-      ctx.translate(cx,cy);
+      ctx.translate(cx, cy);
 
       if(items.length === 0){
         ctx.beginPath();
         ctx.arc(0,0,r,0,Math.PI*2);
-        ctx.fillStyle = '#111821';
+        ctx.fillStyle = '#111a1b';
         ctx.fill();
         ctx.strokeStyle = 'rgba(255,255,255,.08)';
         ctx.lineWidth = 6;
         ctx.stroke();
 
-        ctx.fillStyle = '#9aabbd';
+        ctx.fillStyle = '#9ab0aa';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.font = '800 40px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif';
-        ctx.fillText('等待配置',0,0);
+        ctx.fillText('等待配置', 0, 0);
         ctx.restore();
         return;
+      }
+
+      // outer helper rings
+      ctx.beginPath();
+      ctx.arc(0,0,r+20,0,Math.PI*2);
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = 'rgba(255,255,255,.06)';
+      ctx.stroke();
+
+      if(labelMode === 'outer'){
+        ctx.beginPath();
+        ctx.arc(0,0,r+58,0,Math.PI*2);
+        ctx.lineWidth = 1;
+        ctx.setLineDash([5,8]);
+        ctx.strokeStyle = 'rgba(255,255,255,.08)';
+        ctx.stroke();
+        ctx.setLineDash([]);
       }
 
       ctx.rotate(rotationDeg * Math.PI / 180);
 
       const slice = Math.PI * 2 / items.length;
+      const baseStart = -Math.PI / 2 - slice / 2;
 
       for(let i=0;i<items.length;i++){
-        const start = -Math.PI / 2 + i * slice;
+        const start = baseStart + i * slice;
         const end = start + slice;
+        const mid = start + slice / 2;
+        const isSelected = !spinning && i === currentWinnerIndex;
 
+        const pair = COLOR_SET[i % COLOR_SET.length];
         const grad = ctx.createLinearGradient(
           Math.cos(start) * r, Math.sin(start) * r,
           Math.cos(end) * r, Math.sin(end) * r
         );
-        const c1 = COLOR_SET[i % COLOR_SET.length];
-        const c2 = COLOR_SET[(i + 3) % COLOR_SET.length];
-        grad.addColorStop(0,c1);
-        grad.addColorStop(1,c2);
+        grad.addColorStop(0, pair[0]);
+        grad.addColorStop(1, pair[1]);
 
         ctx.beginPath();
         ctx.moveTo(0,0);
@@ -764,78 +933,86 @@
         ctx.fillStyle = grad;
         ctx.fill();
 
-        ctx.strokeStyle = 'rgba(255,255,255,.2)';
-        ctx.lineWidth = 4;
+        if(isSelected){
+          ctx.save();
+          ctx.beginPath();
+          ctx.moveTo(0,0);
+          ctx.arc(0,0,r,start,end);
+          ctx.closePath();
+          ctx.fillStyle = 'rgba(255,255,255,.09)';
+          ctx.fill();
+          ctx.restore();
+        }
+
+        ctx.save();
+        ctx.strokeStyle = isSelected ? 'rgba(250,255,253,.98)' : 'rgba(255,255,255,.22)';
+        ctx.lineWidth = isSelected ? 7 : 4;
+        if(isSelected){
+          ctx.shadowColor = 'rgba(154,240,223,.42)';
+          ctx.shadowBlur = 22;
+        }
         ctx.stroke();
+        ctx.restore();
 
-        const mid = (start + end) / 2;
         const innerR = r * .18;
-
         ctx.beginPath();
         ctx.moveTo(Math.cos(start) * innerR, Math.sin(start) * innerR);
         ctx.lineTo(Math.cos(start) * r * .95, Math.sin(start) * r * .95);
-        ctx.strokeStyle = 'rgba(255,255,255,.16)';
-        ctx.lineWidth = 1.5;
+        ctx.strokeStyle = 'rgba(0,0,0,.10)';
+        ctx.lineWidth = 1.2;
         ctx.stroke();
 
-        ctx.save();
-        ctx.rotate(mid);
-        ctx.translate(r * .62, 0);
-        ctx.rotate(Math.PI / 2);
-
-        const text = items[i];
-        let fontSize = 38;
-        if(text.length >= 5) fontSize = 32;
-        if(text.length >= 8) fontSize = 26;
-
-        ctx.fillStyle = '#ffffff';
-        ctx.font = `900 ${fontSize}px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif`;
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.shadowColor = 'rgba(0,0,0,.22)';
-        ctx.shadowBlur = 12;
-        ctx.fillText(text, 0, 0);
-        ctx.restore();
-
         ctx.beginPath();
-        ctx.arc(Math.cos(mid)*r*.84, Math.sin(mid)*r*.84, 4.5, 0, Math.PI*2);
-        ctx.fillStyle = 'rgba(255,255,255,.85)';
+        ctx.arc(Math.cos(mid)*r*.84, Math.sin(mid)*r*.84, 4.2, 0, Math.PI*2);
+        ctx.fillStyle = 'rgba(255,255,255,.76)';
         ctx.fill();
+
+        if(labelMode === 'radial'){
+          drawRadialVerticalLabel(items[i], mid, r);
+        }
       }
 
-      // ring
       ctx.beginPath();
       ctx.arc(0,0,r,0,Math.PI*2);
       ctx.lineWidth = 10;
-      ctx.strokeStyle = 'rgba(255,255,255,.08)';
+      ctx.strokeStyle = 'rgba(15,24,25,.58)';
       ctx.stroke();
 
       // center
       ctx.beginPath();
       ctx.arc(0,0,r*.17,0,Math.PI*2);
-      ctx.fillStyle = '#0d141b';
+      ctx.fillStyle = '#0d1515';
       ctx.fill();
 
       const centerGrad = ctx.createLinearGradient(-r*.2,-r*.2,r*.2,r*.2);
-      centerGrad.addColorStop(0,'#ffd792');
-      centerGrad.addColorStop(1,'#ff7a2f');
+      centerGrad.addColorStop(0,'#e6ece6');
+      centerGrad.addColorStop(0.55,'#93e3d5');
+      centerGrad.addColorStop(1,'#b44757');
       ctx.beginPath();
       ctx.arc(0,0,r*.12,0,Math.PI*2);
       ctx.fillStyle = centerGrad;
       ctx.fill();
 
-      ctx.fillStyle = '#0c0f14';
+      ctx.fillStyle = '#0c1111';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.font = '900 28px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif';
+      ctx.font = '900 26px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif';
       ctx.fillText('食',0,1);
+
+      if(labelMode === 'outer'){
+        for(let i=0;i<items.length;i++){
+          const mid = baseStart + i * slice + slice / 2;
+          const isSelected = !spinning && i === currentWinnerIndex;
+          drawOuterLabel(items[i], mid, r, isSelected);
+        }
+      }
 
       ctx.restore();
     }
 
     function burstFx(){
       burst.innerHTML = '';
-      const colors = ['#ff8a3d','#ffd36d','#59b7ff','#64ffc6','#ff6f56','#9ab2ff'];
+      const colors = ['#71d1c2','#9af0df','#b44757','#e06a79','#dfe8e0','#d8c082'];
       for(let i=0;i<28;i++){
         const el = document.createElement('span');
         el.className = 'chip';
@@ -850,11 +1027,12 @@
       setTimeout(() => burst.innerHTML = '', 1600);
     }
 
-    function finishSpin(){
-      const idx = getWinnerIndex(currentRotation);
-      const winner = idx >= 0 ? items[idx] : '待命中';
+    function finishSpin(finalIndex){
+      currentWinnerIndex = finalIndex;
+      const winner = finalIndex >= 0 ? items[finalIndex] : '待命中';
       resultValue.textContent = winner;
       hintText.textContent = HINTS[Math.floor(Math.random() * HINTS.length)];
+      drawWheel(currentRotation);
       burstFx();
       spinning = false;
       document.getElementById('spinBtn').style.opacity = '1';
@@ -863,41 +1041,54 @@
 
     function spinWheel(forceRespin = false){
       if(spinning) return;
+
       if(items.length === 0){
         resultValue.textContent = '无候选项';
         hintText.textContent = '请先添加菜单项';
         return;
       }
+
       if(items.length === 1){
+        currentWinnerIndex = 0;
+        currentRotation = getFinalRotationForIndex(0);
+        drawWheel(currentRotation);
         resultValue.textContent = items[0];
         hintText.textContent = '仅有一个候选项，自动锁定';
         return;
       }
 
       spinning = true;
+      currentWinnerIndex = -1;
       document.getElementById('spinBtn').style.opacity = '.7';
       document.getElementById('respinBtn').style.opacity = '.7';
 
-      const extraSpins = forceRespin ? (5.6 + Math.random()*1.6) : (6.6 + Math.random()*1.8);
-      const randomOffset = Math.random() * 360;
+      const currentIndex = getWinnerIndex(currentRotation);
+      const targetIndex = pickRandomIndex(forceRespin ? currentIndex : null);
+      const finalRotation = getFinalRotationForIndex(targetIndex);
+      const extraTurns = forceRespin ? (5.2 + Math.random() * 1.2) : (6.2 + Math.random() * 1.8);
+      const delta = normalizeDeg(finalRotation - normalizeDeg(currentRotation));
       const start = currentRotation;
-      const target = currentRotation + extraSpins * 360 + randomOffset;
-      const duration = forceRespin ? (3200 + Math.random()*700) : (4200 + Math.random()*900);
+      const target = currentRotation + extraTurns * 360 + delta;
+      const duration = forceRespin ? (2900 + Math.random() * 500) : (3900 + Math.random() * 800);
       const t0 = performance.now();
+
+      hintText.textContent = forceRespin ? '执行重选中...' : '决策计算中...';
 
       function animate(t){
         const p = Math.min(1, (t - t0) / duration);
         const eased = 1 - Math.pow(1 - p, 4);
         currentRotation = start + (target - start) * eased;
         drawWheel(currentRotation);
+
         if(p < 1){
           requestAnimationFrame(animate);
         }else{
-          currentRotation = normalizeDeg(target);
+          currentRotation = finalRotation;
           drawWheel(currentRotation);
-          finishSpin();
+          finishSpin(targetIndex);
         }
       }
+
       requestAnimationFrame(animate);
     }
 
@@ -907,12 +1098,15 @@
         const j = Math.floor(Math.random() * (i + 1));
         [items[i], items[j]] = [items[j], items[i]];
       }
+      currentWinnerIndex = -1;
       renderList();
       hintText.textContent = '候选顺序已重排';
+      resultValue.textContent = '待命中';
     }
 
     function resetItems(){
       items = [...DEFAULT_ITEMS];
+      currentWinnerIndex = -1;
       renderList();
       resultValue.textContent = '待命中';
       hintText.textContent = '默认菜单已恢复';
@@ -920,6 +1114,7 @@
 
     function clearItems(){
       items = [];
+      currentWinnerIndex = -1;
       renderList();
       resultValue.textContent = '待命中';
       hintText.textContent = '列表已清空';
